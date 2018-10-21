@@ -40,35 +40,12 @@ public class Controller {
     @FXML
     public void searchBook(KeyEvent key) {
         if (key.getCode() == KeyCode.ENTER) {
-
-//
-//            String s = textField.getText();
-//            String[] ss = s.split(" ");
-//            try {
-//                ObservableList<Book> data =
-//                        FXCollections.observableArrayList(Datasource.getInstance().getBookList(ss[0].toUpperCase()));
-//                listView.setItems(data);
-//                textField.clear();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
             setData();
         }
     }
 
     @FXML
     public void searchBookButton() {
-//        String s = textField.getText();
-//        String[] ss = s.split(" ");
-//        try {
-//            ObservableList<Book> data =
-//                    FXCollections.observableArrayList(Datasource.getInstance().getBookList(ss[0].toUpperCase()));
-//            listView.setItems(data);
-//            textField.clear();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-
         setData();
     }
 
