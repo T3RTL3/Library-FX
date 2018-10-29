@@ -20,7 +20,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void init() throws Exception {
+    public void init() {
 
         if(! Datasource.getInstance().open()){
             Platform.exit();
@@ -30,7 +30,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void stop() throws Exception {
+    public void stop() {
         Datasource.getInstance().stop();
     }
 

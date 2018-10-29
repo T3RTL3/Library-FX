@@ -37,6 +37,12 @@ public class Controller {
     @FXML
     private BorderPane mainBorderPane;
 
+
+    final ContextMenu contextMenu = new ContextMenu();
+
+    MenuItem availability = new MenuItem("Availability");
+
+
     @FXML
     public void searchBook(KeyEvent key) {
         if (key.getCode() == KeyCode.ENTER) {
@@ -57,11 +63,19 @@ public class Controller {
             ObservableList<Book> data =
                     FXCollections.observableArrayList(Datasource.getInstance().getBookList(ss[0].toUpperCase()));
 
-                listView.setItems(data);
-                textField.clear();
+            listView.setItems(data);
+            textField.clear();
 
+            //Creating availability menu event
+            final ContextMenu contextMenu = new ContextMenu();
+            MenuItem availability = new MenuItem("Availability");
+            contextMenu.getItems().addAll(availability);
 
+            availability.setOnAction((event -> {
+                System.out.println("event check");
+            }));
 
+            listView.setContextMenu(contextMenu);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -88,7 +102,7 @@ public class Controller {
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
 
-            DialogController controller= fxmlLoader.getController();
+            DialogController controller = fxmlLoader.getController();
             controller.insertBooks();
         }
 
