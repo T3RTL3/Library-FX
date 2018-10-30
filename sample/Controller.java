@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
@@ -26,7 +25,7 @@ public class Controller {
     @FXML
     private Button addBook;
     @FXML
-    public Button searchButton;
+    private Button searchButton;
 
     @FXML
     private TextField textField;
@@ -38,26 +37,28 @@ public class Controller {
     private BorderPane mainBorderPane;
 
 
-    final ContextMenu contextMenu = new ContextMenu();
-
-    MenuItem availability = new MenuItem("Availability");
-
-
-    @FXML
-    public void searchBook(KeyEvent key) {
-        if (key.getCode() == KeyCode.ENTER) {
-            setData();
-        }
-    }
+//    @FXML
+//    public void searchBook(KeyEvent key) {
+//        if (key.getCode() == KeyCode.ENTER) {
+//            setData();
+//        }
+//    }
 
     @FXML
     public void searchBookButton() {
-        setData();
+        textField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                setData();
+            }
+        });
+        searchButton.setOnAction(event -> setData());
     }
 
     private void setData() {
         //Querying the data from database, getting text from @TextField printing  @ListView
         String s = textField.getText();
+        //User can optional input more then one word
+
         String[] ss = s.split(" ");
         try {
             ObservableList<Book> data =
@@ -72,7 +73,8 @@ public class Controller {
             contextMenu.getItems().addAll(availability);
 
             availability.setOnAction((event -> {
-                System.out.println("event check");
+                Book book = listView.getSelectionModel().getSelectedItem();
+                Datasource.getInstance().checkBookAvailability(book);
             }));
 
             listView.setContextMenu(contextMenu);
@@ -85,7 +87,6 @@ public class Controller {
 
     @FXML
     public void addBook() {
-        System.out.println("event");
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.initOwner(mainBorderPane.getScene().getWindow());
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -95,13 +96,10 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
         Optional<ButtonType> result = dialog.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
-
             DialogController controller = fxmlLoader.getController();
             controller.insertBooks();
         }

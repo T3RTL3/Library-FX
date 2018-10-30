@@ -1,10 +1,7 @@
 package data;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import sample.Controller;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +67,12 @@ public class Datasource {
         return books;
         }
 
+
+    //Book availability
+    public void checkBookAvailability(Book book) {
+        System.out.println(book);
+
+    }
 
 
     //ADDING BOOK
